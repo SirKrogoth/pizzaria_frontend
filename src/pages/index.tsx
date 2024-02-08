@@ -7,6 +7,7 @@ import { Button } from '../components/ui/Button';
 import Link from 'next/link';
 import { useContext, FormEvent, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
+import { toast } from 'react-toastify';
 
 export default function Home() {
   const { signIn } = useContext(AuthContext);
@@ -18,12 +19,21 @@ export default function Home() {
   async function handleLogin(event: FormEvent){
     event.preventDefault();
 
+    if(email === '' || password === ''){
+      toast.warning("Email e senha deverão ser informados.");      
+      return;
+    }
+
+    setLoading(true);
+
     let data = {
       email,
       password
     }
 
     await signIn(data);
+
+    setLoading(false);
   }
 
   return (
@@ -50,7 +60,7 @@ export default function Home() {
               onChange={(e) => setPassword(e.target.value)}
               />
 
-              <Button type="submit" loading={false}>
+              <Button type="submit" loading={loading}>
                 Acessar
               </Button>
             </form>
