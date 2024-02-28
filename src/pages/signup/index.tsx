@@ -42,6 +42,7 @@ export default function SignUp() {
     <>
       <Head>
         <title>Faça o seu cadastro agora!</title>
+        <meta name="description" content="Página de Cadastro de Usuários" />
       </Head>
       <div>
         <div className={styles.containerCenter}>

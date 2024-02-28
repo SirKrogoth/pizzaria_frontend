@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useContext, FormEvent, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { toast } from 'react-toastify';
+import { canSSRGuest } from '../utils/canSSRGuest';
 
 export default function Home() {
   const { signIn } = useContext(AuthContext);
@@ -40,6 +41,7 @@ export default function Home() {
     <>
       <Head>
         <title>SujeitoPizzaria - Faça o seu login</title>
+        <meta name="description" content="Página de Logon" />
       </Head>
       <div>
         <div className={styles.containerCenter}>
@@ -65,8 +67,8 @@ export default function Home() {
               </Button>
             </form>
 
-            <Link href="/signup" legacyBehavior>
-              <a className={styles.text}>Não possui uma conta? Cadastre-se</a>
+            <Link href="/signup" className={styles.text}>
+              Não possui uma conta? Cadastre-se
             </Link>
             
           </div>
@@ -75,3 +77,10 @@ export default function Home() {
     </>
   );
 }
+
+//rever aula 105
+export const getServerSideProps = canSSRGuest(async (ctx) => {
+  return {
+    props: {}
+  }
+});

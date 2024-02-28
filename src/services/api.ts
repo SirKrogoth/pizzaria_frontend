@@ -3,8 +3,8 @@ import { parseCookies } from 'nookies';
 import { AuthTokenError } from './errors/AuthTokenError';
 import { signOut } from '../contexts/AuthContext';
 
-export function setupAPIClient(context = undefined){
-    let cookies = parseCookies(context);
+export function setupAPIClient(ctx = undefined){
+    let cookies = parseCookies(ctx);
 
     const api = axios.create({
         baseURL: 'http://localhost:3333',
@@ -16,7 +16,7 @@ export function setupAPIClient(context = undefined){
     api.interceptors.response.use(response => {
         return response;
     }, (error: AxiosError) => {
-        if(error.response?.status === 401){
+        if(error.response.status === 401){
             //Qualquer erro 401 (nao autorizado) devemos deslogar o usuário
             if(typeof window !== undefined){
                 //função para deslogar o usuário 
@@ -28,7 +28,7 @@ export function setupAPIClient(context = undefined){
 
         return Promise.reject(error);
     });
-
+    
     return api; 
     
 }
